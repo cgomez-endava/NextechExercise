@@ -1,0 +1,45 @@
+<h1 id="tableLabel">News</h1>
+
+<p *ngIf="!news?.length"><em>Loading...</em></p>
+
+<div>
+  <input type='text' [(ngModel)]='filter' >
+</div>
+<div>
+  <input type='submit' value='Search' (click)='setFilter()'>
+</div>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="news.length">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let newsItem of news">
+      <td>{{ newsItem.title }}</td>
+      <td>{{ newsItem.url }}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="card-footer pb-0 pt-3">
+  <ul *ngIf="pager && pager.pages?.length" class="pagination justify-content-center">
+    <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
+      <a (click)="setPage(1)" class="page-link">First</a>
+    </li>
+    <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
+      <a (click)="setPage(pager.currentPage - 1)" class="page-link">Previous</a>
+    </li>
+    <li *ngFor="let page of pager.pages" [ngClass]="{ active: pager.currentPage === page }" class="page-item">
+      <a (click)="setPage(page)" class="page-link">{{page}}</a>
+    </li>
+    <li [ngClass]="{ disabled: pager.currentPage === pager.totalPages }" class="page-item">
+      <a (click)="setPage(pager.currentPage + 1)" class="page-link">Next</a>
+    </li>
+    <li [ngClass]="{ disabled: pager.currentPage === pager.totalPages }" class="page-item">
+      <a (click)="setPage(pager.totalPages)" class="page-link">Last</a>
+    </li>
+  </ul>
+</div>
+
